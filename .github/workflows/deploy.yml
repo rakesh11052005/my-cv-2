@@ -3,16 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
 
 jobs:
   build:
@@ -31,35 +21,10 @@ jobs:
           version: 8
           
       - name: Install dependencies
-        run: |
-          pnpm install --frozen-lockfile
-          pnpm add -D file-loader
-        
-      - name: Debug: List files
-        run: |
-          echo "Current directory contents:"
-          ls -la
-          echo "Public directory contents:"
-          ls -la public
+        run: pnpm install --frozen-lockfile
         
       - name: Build
-        run: |
-          echo "Starting build..."
-          NODE_ENV=production pnpm build
-          echo "Build completed"
-          if [ ! -d "out" ]; then
-            echo "Build failed: out directory not found"
-            exit 1
-          fi
-        
-      - name: Debug: Check output
-        run: |
-          echo "Checking out directory contents:"
-          ls -la out
-          echo "Checking for index.html:"
-          ls -la out/index.html || echo "index.html not found!"
-          echo "Checking for assets:"
-          ls -la out/assets || echo "assets directory not found!"
+        run: pnpm build
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
