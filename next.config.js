@@ -23,7 +23,9 @@ const config = withPWA({
   basePath: process.env.NODE_ENV === 'production' ? '/my-cv-2' : '',
   images: {
     unoptimized: true,
-  }
+  },
+  trailingSlash: true,
+  distDir: 'out'
 });
 
 export default config;
