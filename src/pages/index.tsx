@@ -229,38 +229,9 @@ export default function Home() {
                 scene={process.env.NODE_ENV === 'production' ? '/my-cv-2/assets/scene.splinecode' : '/assets/scene.splinecode'}
                 onLoad={(splineApp) => {
                   console.log('Spline scene loaded successfully');
-                  // Try to play any animations if they exist
-                  try {
-                    // Access the scene through the application
-                    const scene = (splineApp as any).scene;
-                    if (scene && scene.children) {
-                      scene.children.forEach((object: any) => {
-                        if (object.animations && object.animations.length > 0) {
-                          object.animations.forEach((animation: any) => {
-                            if (animation.play) {
-                              animation.play();
-                            }
-                          });
-                        }
-                      });
-                    }
-                  } catch (error) {
-                    console.error('Error playing animations:', error);
-                  }
                 }}
                 onError={(error) => {
                   console.error('Error loading Spline scene:', error);
-                  // Try to load the scene file directly to check if it's accessible
-                  fetch(process.env.NODE_ENV === 'production' ? '/my-cv-2/assets/scene.splinecode' : '/assets/scene.splinecode')
-                    .then(response => {
-                      if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                      }
-                      console.log('Scene file is accessible');
-                    })
-                    .catch(error => {
-                      console.error('Error fetching scene file:', error);
-                    });
                 }}
               />
             </Suspense>
