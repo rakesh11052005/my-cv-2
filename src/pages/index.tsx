@@ -229,9 +229,31 @@ export default function Home() {
                 scene={process.env.NODE_ENV === 'production' ? '/my-cv-2/assets/scene.splinecode' : '/assets/scene.splinecode'}
                 onLoad={(splineApp) => {
                   console.log('Spline scene loaded successfully');
+                  // Try to play any animations if they exist
+                  try {
+                    const animations = splineApp.getAnimations();
+                    if (animations && animations.length > 0) {
+                      animations.forEach(animation => {
+                        animation.play();
+                      });
+                    }
+                  } catch (error) {
+                    console.error('Error playing animations:', error);
+                  }
                 }}
                 onError={(error) => {
                   console.error('Error loading Spline scene:', error);
+                  // Try to load the scene file directly to check if it's accessible
+                  fetch(process.env.NODE_ENV === 'production' ? '/my-cv-2/assets/scene.splinecode' : '/assets/scene.splinecode')
+                    .then(response => {
+                      if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                      }
+                      console.log('Scene file is accessible');
+                    })
+                    .catch(error => {
+                      console.error('Error fetching scene file:', error);
+                    });
                 }}
               />
             </Suspense>

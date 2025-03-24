@@ -16,7 +16,14 @@ const config = {
   },
   trailingSlash: true,
   distDir: 'out',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/my-cv-2/' : ''
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/my-cv-2/' : '',
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.splinecode$/,
+      type: 'asset/resource',
+    });
+    return config;
+  },
 };
 
 export default config;
