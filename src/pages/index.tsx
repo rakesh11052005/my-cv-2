@@ -37,8 +37,8 @@ const projects = [
   {
     title: "This website",
     description: "My personal website",
-    image: "/assets/portfolio.mp4",
-    fallbackImage: "/assets/wrona.jpeg",
+    image: process.env.NODE_ENV === 'production' ? '/my-cv-2/assets/portfolio.mp4' : '/assets/portfolio.mp4',
+    fallbackImage: process.env.NODE_ENV === 'production' ? '/my-cv-2/assets/wrona.jpeg' : '/assets/wrona.jpeg',
     href: "https://github.com/rakesh11052005/portfolio",
     type: "video"
   },
@@ -322,9 +322,9 @@ export default function Home() {
                                     fallback.className = 'absolute inset-0 h-full w-full object-cover';
                                     video.parentNode?.appendChild(fallback);
                                   }}
-                                  onLoadStart={() => console.log('Video loading started')}
-                                  onLoadedData={() => console.log('Video data loaded')}
-                                  onCanPlay={() => console.log('Video can play')}
+                                  onLoadStart={() => console.log('Video loading started:', project.image)}
+                                  onLoadedData={() => console.log('Video data loaded:', project.image)}
+                                  onCanPlay={() => console.log('Video can play:', project.image)}
                                   preload="auto"
                                 />
                               </div>
