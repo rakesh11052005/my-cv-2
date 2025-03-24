@@ -31,15 +31,21 @@ jobs:
           version: 8
           
       - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm add -D file-loader
         
       - name: Debug: List files
-        run: ls -la
+        run: |
+          echo "Current directory contents:"
+          ls -la
+          echo "Public directory contents:"
+          ls -la public
         
       - name: Build
         run: |
           echo "Starting build..."
-          pnpm build
+          NODE_ENV=production pnpm build
           echo "Build completed"
           if [ ! -d "out" ]; then
             echo "Build failed: out directory not found"
@@ -52,6 +58,8 @@ jobs:
           ls -la out
           echo "Checking for index.html:"
           ls -la out/index.html || echo "index.html not found!"
+          echo "Checking for assets:"
+          ls -la out/assets || echo "assets directory not found!"
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

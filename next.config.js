@@ -15,7 +15,22 @@ const config = {
     unoptimized: true,
   },
   trailingSlash: true,
-  distDir: 'out'
+  distDir: 'out',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/my-cv-2/' : '',
+  webpack: (config) => {
+    config.module.rules.push({
+      test: /\.(webm|mp4)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          publicPath: '/_next/static/videos/',
+          outputPath: 'static/videos/',
+          name: '[name].[ext]',
+        },
+      },
+    });
+    return config;
+  }
 };
 
 export default config;
