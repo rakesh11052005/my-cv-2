@@ -37,8 +37,9 @@ const projects = [
   {
     title: "This website",
     description: "My personal website",
-    image: "/assets/portfolio.webm",
+    image: "/assets/portfolio.mp4",
     href: "https://github.com/rakesh11052005/portfolio",
+    type: "video"
   },
 ];
 
@@ -299,14 +300,18 @@ export default function Home() {
                       <Card id="tilt">
                         <CardHeader className="p-0">
                           <Link href={project.href} target="_blank" passHref>
-                            {project.image.endsWith(".webm") ? (
-                              <video
-                                src={project.image}
-                                autoPlay
-                                loop
-                                muted
-                                className="aspect-video h-full w-full rounded-t-md bg-primary object-cover"
-                              />
+                            {project.type === "video" ? (
+                              <div className="relative aspect-video w-full overflow-hidden rounded-t-md bg-primary">
+                                <video
+                                  src={project.image}
+                                  autoPlay
+                                  loop
+                                  muted
+                                  playsInline
+                                  className="absolute inset-0 h-full w-full object-cover"
+                                  style={{ maxHeight: '400px' }}
+                                />
+                              </div>
                             ) : (
                               <Image
                                 src={project.image}
