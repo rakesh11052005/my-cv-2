@@ -3,21 +3,11 @@
  * for Docker builds.
  */
 await import("./src/env.js");
-import WithPWA from "next-pwa";
-
-const withPWA = WithPWA({
-  dest: "public",
-  disable: process.env.NODE_ENV === "development",
-  register: true,
-  scope: "/",
-  sw: "service-worker.js",
-});
 
 /**
  * @type {import('next').NextConfig}
  */
-// @ts-ignore
-const config = withPWA({
+const config = {
   reactStrictMode: true,
   output: 'export',
   basePath: process.env.NODE_ENV === 'production' ? '/my-cv-2' : '',
@@ -26,6 +16,6 @@ const config = withPWA({
   },
   trailingSlash: true,
   distDir: 'out'
-});
+};
 
 export default config;

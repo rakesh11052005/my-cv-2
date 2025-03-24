@@ -33,16 +33,25 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
         
+      - name: Debug: List files
+        run: ls -la
+        
       - name: Build
         run: |
+          echo "Starting build..."
           pnpm build
+          echo "Build completed"
           if [ ! -d "out" ]; then
             echo "Build failed: out directory not found"
             exit 1
           fi
         
-      - name: Check output
-        run: ls -la out
+      - name: Debug: Check output
+        run: |
+          echo "Checking out directory contents:"
+          ls -la out
+          echo "Checking for index.html:"
+          ls -la out/index.html || echo "index.html not found!"
         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
