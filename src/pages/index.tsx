@@ -322,7 +322,13 @@ export default function Home() {
                                   muted
                                   playsInline
                                   className="absolute inset-0 h-full w-full object-cover"
-                                  style={{ maxHeight: '400px' }}
+                                  style={{ 
+                                    maxHeight: '400px',
+                                    objectFit: 'cover',
+                                    objectPosition: 'center',
+                                    width: '100%',
+                                    height: '100%'
+                                  }}
                                   onError={(e) => {
                                     console.error('Video loading error:', e);
                                     const video = e.currentTarget;
