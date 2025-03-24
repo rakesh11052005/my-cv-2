@@ -220,8 +220,20 @@ export default function Home() {
             id={styles["canvas-container"]}
             className="mt-14 h-full w-full xl:mt-0"
           >
-            <Suspense fallback={<span>Loading...</span>}>
-              <Spline scene="/assets/scene.splinecode" />
+            <Suspense fallback={
+              <div className="flex h-full w-full items-center justify-center">
+                <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent"></div>
+              </div>
+            }>
+              <Spline 
+                scene={process.env.NODE_ENV === 'production' ? '/my-cv-2/assets/scene.splinecode' : '/assets/scene.splinecode'}
+                onLoad={(splineApp) => {
+                  console.log('Spline scene loaded successfully');
+                }}
+                onError={(error) => {
+                  console.error('Error loading Spline scene:', error);
+                }}
+              />
             </Suspense>
           </div>
         </section>
