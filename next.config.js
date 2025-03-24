@@ -23,7 +23,7 @@ const config = {
       use: {
         loader: 'file-loader',
         options: {
-          publicPath: '/_next/static/videos/',
+          publicPath: process.env.NODE_ENV === 'production' ? '/my-cv-2/_next/static/videos/' : '/_next/static/videos/',
           outputPath: 'static/videos/',
           name: '[name].[ext]',
         },
