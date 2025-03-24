@@ -37,7 +37,8 @@ const projects = [
   {
     title: "This website",
     description: "My personal website",
-    image: process.env.NODE_ENV === 'production' ? '/my-cv-2/assets/portfolio.mp4' : '/assets/portfolio.mp4',
+    image: "/assets/portfolio.mp4",
+    fallbackImage: "/assets/wrona.jpeg",
     href: "https://github.com/rakesh11052005/portfolio",
     type: "video"
   },
@@ -312,8 +313,18 @@ export default function Home() {
                                   style={{ maxHeight: '400px' }}
                                   onError={(e) => {
                                     console.error('Video loading error:', e);
-                                    e.currentTarget.style.display = 'none';
+                                    const video = e.currentTarget;
+                                    video.style.display = 'none';
+                                    // Show fallback image
+                                    const fallback = document.createElement('img');
+                                    fallback.src = project.fallbackImage;
+                                    fallback.alt = project.title;
+                                    fallback.className = 'absolute inset-0 h-full w-full object-cover';
+                                    video.parentNode?.appendChild(fallback);
                                   }}
+                                  onLoadStart={() => console.log('Video loading started')}
+                                  onLoadedData={() => console.log('Video data loaded')}
+                                  onCanPlay={() => console.log('Video can play')}
                                   preload="auto"
                                 />
                               </div>

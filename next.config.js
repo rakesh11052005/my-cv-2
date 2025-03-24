@@ -18,12 +18,13 @@ const config = {
   distDir: 'out',
   assetPrefix: process.env.NODE_ENV === 'production' ? '/my-cv-2/' : '',
   webpack: (config) => {
+    // Handle video files
     config.module.rules.push({
       test: /\.(webm|mp4)$/,
       use: {
         loader: 'file-loader',
         options: {
-          publicPath: process.env.NODE_ENV === 'production' ? '/my-cv-2/_next/static/videos/' : '/_next/static/videos/',
+          publicPath: '/_next/static/videos/',
           outputPath: 'static/videos/',
           name: '[name].[ext]',
         },
