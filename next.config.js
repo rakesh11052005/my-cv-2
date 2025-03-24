@@ -19,6 +19,11 @@ const withPWA = WithPWA({
 // @ts-ignore
 const config = withPWA({
   reactStrictMode: true,
+  output: 'export',
+  basePath: process.env.NODE_ENV === 'production' ? '/my-cv-2' : '',
+  images: {
+    unoptimized: true,
+  },
 
   /**
    * If you are using `appDir` then you must comment the below `i18n` config out.
