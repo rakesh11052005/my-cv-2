@@ -231,18 +231,19 @@ export default function Home() {
                   console.log('Spline scene loaded successfully');
                   // Try to play any animations if they exist
                   try {
-                    // Get all objects in the scene
-                    const objects = splineApp.scene.children;
-                    // Find and play any animations
-                    objects.forEach((object: any) => {
-                      if (object.animations && object.animations.length > 0) {
-                        object.animations.forEach((animation: any) => {
-                          if (animation.play) {
-                            animation.play();
-                          }
-                        });
-                      }
-                    });
+                    // Access the scene through the application
+                    const scene = (splineApp as any).scene;
+                    if (scene && scene.children) {
+                      scene.children.forEach((object: any) => {
+                        if (object.animations && object.animations.length > 0) {
+                          object.animations.forEach((animation: any) => {
+                            if (animation.play) {
+                              animation.play();
+                            }
+                          });
+                        }
+                      });
+                    }
                   } catch (error) {
                     console.error('Error playing animations:', error);
                   }
